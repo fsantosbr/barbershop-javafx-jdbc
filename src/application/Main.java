@@ -1,10 +1,12 @@
 package application;
 	
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import db.DB;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -42,7 +44,7 @@ public class Main extends Application {
 	}
 	
 	public static void main(String[] args) {
-		launch(args);
+		//launch(args);
 		
 		System.out.println("New client? New Barber?");
 		System.out.println("Inform who you are!!");
@@ -95,5 +97,8 @@ public class Main extends Application {
 		
 		Agenda agenda = new Agenda(1, new Date(), p1, p2);
 		System.out.println(agenda);
+		
+		//Connection conn = DB.getConnection();
+		//DB.closeConnection();
 	}
 }
