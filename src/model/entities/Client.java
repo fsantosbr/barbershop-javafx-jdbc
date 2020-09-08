@@ -13,7 +13,7 @@ public class Client extends Person implements Serializable {
 		super();
 	}
 
-	public Client(Integer id, String name, String email, Long phoneNumber) {
+	public Client(Integer id, String name, String email, String phoneNumber) {
 		super(id, name, email, phoneNumber);
 	}
 	

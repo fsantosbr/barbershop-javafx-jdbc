@@ -6,13 +6,13 @@ public abstract class Person {
 	private Integer id;
 	private String name;
 	private String email;
-	private Long phoneNumber;
+	private String phoneNumber;
 	
 	// CONSTRUCTORS
 	public Person() {
 	}
 
-	public Person(Integer id, String name, String email, Long phoneNumber) {
+	public Person(Integer id, String name, String email, String phoneNumber) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
@@ -44,11 +44,11 @@ public abstract class Person {
 		this.email = email;
 	}
 
-	public Long getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(Long phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 

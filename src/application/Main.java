@@ -50,7 +50,7 @@ public class Main extends Application {
 		
 		// User inform his/her email and phone number to validate
 		String email = "nicolas@gmail.com";
-		Long phoneNumber = 1159322105L;
+		String phoneNumber = "1159322105";
 		
 		
 		// allocation only to test - 
@@ -59,8 +59,8 @@ public class Main extends Application {
 		
 		
 		// data captured from database (MOCK)
-		Client p1 = new Client(1, "Nicolas Santos", "nicolas@gmail.com", 1159322105L);		
-		Barber p2 = new Barber(2, "Fabio Alves", "fabio@barber.com", 11965398826L);
+		Client p1 = new Client(1, "Nicolas Santos", "nicolas@gmail.com", "1159322105");		
+		Barber p2 = new Barber(2, "Fabio Alves", "fabio@barber.com", "11965398826");
 		
 	
 		// future method to get a collection of Person

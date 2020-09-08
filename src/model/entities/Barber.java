@@ -12,7 +12,7 @@ public class Barber extends Person implements Serializable {
 		super();
 	}
 
-	public Barber(Integer id, String name, String email, Long phoneNumber) {
+	public Barber(Integer id, String name, String email, String phoneNumber) {
 		super(id, name, email, phoneNumber);
 	}
 	
