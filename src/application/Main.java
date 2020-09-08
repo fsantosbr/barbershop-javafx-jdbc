@@ -7,8 +7,8 @@ import java.util.List;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.entities.Agenda;
 import model.entities.Barber;
@@ -21,9 +21,10 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/MainView.fxml"));
-			Parent parent = loader.load();
+			// Parent parent = loader.load();
+			AnchorPane anchorPane = loader.load();
 			
-			Scene mainScene = new Scene(parent);
+			Scene mainScene = new Scene(anchorPane);
 			primaryStage.setScene(mainScene);
 			primaryStage.setTitle("Barber Shop - By @fsantosbr");
 			primaryStage.show();

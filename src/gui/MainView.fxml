@@ -1,8 +1,156 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
+
+<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane layoutX="-7.0" layoutY="-1.0" prefHeight="507.0" prefWidth="286.0" style="-fx-background-color: #1B6CD7;">
+         <children>
+            <Button layoutX="73.0" layoutY="169.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="118.0" style="-fx-background-radius: 5em;" text="Create Account" />
+            <Button layoutX="73.0" layoutY="222.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="118.0" text="Log In" />
+            <MenuBar layoutX="5.0" layoutY="1.0" prefHeight="25.0" prefWidth="286.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="Actions">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Create Account" />
+                        <MenuItem mnemonicParsing="false" text="Login" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </children>
+      </Pane>
+      <Pane layoutX="276.0" layoutY="-1.0" prefHeight="507.0" prefWidth="427.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <Pane layoutX="47.0" layoutY="111.0" prefHeight="32.0" prefWidth="70.0" style="-fx-background-color: #EDEDED;">
+               <children>
+                  <Label layoutX="19.0" layoutY="4.0" text="9AM" textFill="#817878">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Label layoutX="102.0" layoutY="29.0" text="Agenda available for today: 08/09/2020">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Pane layoutX="129.0" layoutY="111.0" prefHeight="32.0" prefWidth="70.0" style="-fx-background-color: #EDEDED;">
+               <children>
+                  <Label layoutX="19.0" layoutY="4.0" text="10AM" textFill="#817878">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane layoutX="329.0" layoutY="111.0" prefHeight="32.0" prefWidth="70.0" style="-fx-background-color: #1B6CD7;">
+               <children>
+                  <Label layoutX="19.0" layoutY="4.0" text="12PM" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane layoutX="245.0" layoutY="111.0" prefHeight="32.0" prefWidth="70.0" style="-fx-background-color: #1B6CD7;">
+               <children>
+                  <Label layoutX="19.0" layoutY="4.0" text="11AM" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane layoutX="47.0" layoutY="169.0" prefHeight="32.0" prefWidth="70.0" style="-fx-background-color: #1B6CD7;">
+               <children>
+                  <Label layoutX="19.0" layoutY="4.0" text="1PM" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane layoutX="129.0" layoutY="169.0" prefHeight="32.0" prefWidth="70.0" style="-fx-background-color: #EDEDED;">
+               <children>
+                  <Label layoutX="19.0" layoutY="4.0" text="2PM" textFill="#817878">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane layoutX="329.0" layoutY="169.0" prefHeight="32.0" prefWidth="70.0" style="-fx-background-color: #EDEDED;">
+               <children>
+                  <Label layoutX="19.0" layoutY="4.0" text="4PM" textFill="#817878">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane layoutX="245.0" layoutY="169.0" prefHeight="32.0" prefWidth="70.0" style="-fx-background-color: #EDEDED;">
+               <children>
+                  <Label layoutX="19.0" layoutY="4.0" text="3PM" textFill="#817878">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane layoutX="47.0" layoutY="222.0" prefHeight="32.0" prefWidth="70.0" style="-fx-background-color: #EDEDED;">
+               <children>
+                  <Label layoutX="19.0" layoutY="4.0" text="5PM" textFill="#817878">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane layoutX="129.0" layoutY="222.0" prefHeight="32.0" prefWidth="70.0" style="-fx-background-color: #EDEDED;">
+               <children>
+                  <Label layoutX="19.0" layoutY="4.0" text="6PM" textFill="#817878">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane layoutX="329.0" layoutY="222.0" prefHeight="32.0" prefWidth="70.0" style="-fx-background-color: #EDEDED;">
+               <children>
+                  <Label layoutX="19.0" layoutY="4.0" text="8PM" textFill="#817878">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane layoutX="245.0" layoutY="222.0" prefHeight="32.0" prefWidth="70.0" style="-fx-background-color: #EDEDED;">
+               <children>
+                  <Label layoutX="19.0" layoutY="4.0" text="7PM" textFill="#817878">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Separator layoutX="47.0" layoutY="289.0" prefHeight="3.0" prefWidth="348.0" />
+         </children>
+      </Pane>
+   </children>
 </AnchorPane>
-
