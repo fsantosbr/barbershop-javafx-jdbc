@@ -17,6 +17,9 @@ import model.entities.Person;
 
 
 public class Main extends Application {
+	
+	private static Scene mainScene;
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -24,13 +27,18 @@ public class Main extends Application {
 			// Parent parent = loader.load();
 			AnchorPane anchorPane = loader.load();
 			
-			Scene mainScene = new Scene(anchorPane);
+			mainScene = new Scene(anchorPane);
 			primaryStage.setScene(mainScene);
 			primaryStage.setTitle("Barber Shop - By @fsantosbr");
 			primaryStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	// method get of the of the attribute Scene
+	public static Scene getMainScene() {
+		return mainScene;
 	}
 	
 	public static void main(String[] args) {
