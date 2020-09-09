@@ -12,6 +12,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.dao.AgendaDao;
+import model.dao.DaoFactory;
 import model.entities.Agenda;
 import model.entities.Barber;
 import model.entities.Client;
@@ -98,7 +100,10 @@ public class Main extends Application {
 		Agenda agenda = new Agenda(1, new Date(), p1, p2);
 		System.out.println(agenda);
 		
-		//Connection conn = DB.getConnection();
-		//DB.closeConnection();
+		AgendaDao agendaDao = DaoFactory.createAgendaDao();
+		
+		Agenda ag = agendaDao.findById(3);
+		
+		System.out.println(ag);
 	}
 }

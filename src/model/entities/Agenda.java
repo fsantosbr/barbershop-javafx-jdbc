@@ -1,5 +1,6 @@
 package model.entities;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Agenda {
@@ -8,6 +9,8 @@ public class Agenda {
 	private Date time;	
 	private Client client; // this attribute/connection must be the sub class in order to avoid mistakes from the developer
 	private Barber barber; // this attribute/connection must be the sub class in order to avoid mistakes from the developer
+	
+	private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 	
 	// CONSTRUCTORS
 	public Agenda() {
@@ -61,7 +64,7 @@ public class Agenda {
 
 	@Override
 	public String toString() {
-		return "Agenda [time=" + time + ", client=" + client.getName() + ", barber=" + barber.getName() + "]";
+		return "Agenda [time=" + sdf.format(time) + ", client=" + client.getName() + ", barber=" + barber.getName() + "]";
 	}
 
 }
