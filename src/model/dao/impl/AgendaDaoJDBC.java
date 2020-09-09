@@ -15,6 +15,7 @@ import model.dao.AgendaDao;
 import model.entities.Agenda;
 import model.entities.Barber;
 import model.entities.Client;
+import model.entities.Person;
 
 // The class that receives the interface and the methods created there
 public class AgendaDaoJDBC implements AgendaDao {
@@ -115,56 +116,25 @@ public class AgendaDaoJDBC implements AgendaDao {
 
 	@Override
 	public List<Agenda> findByClient(Client client) {
-		PreparedStatement st = null;
-		ResultSet rs = null;
-		try {
-			st = conn.prepareStatement(
-					"SELECT agenda.*,client.Name as ClientName, barber.Name as BarberName "
-					+ "FROM agenda INNER JOIN client "
-					+ "ON agenda.ClientId = client.Id "
-					+ "INNER JOIN barber "
-					+ "ON agenda.barberId = barber.Id "
-					+ "WHERE ClientId = ?");
-			
-			st.setInt(1, client.getId());
-			rs = st.executeQuery();
-			
-			List<Agenda> list = new ArrayList<>();
-			Map<Integer, Client> mapCli = new HashMap<>();
-			Map<Integer, Barber> mapBar = new HashMap<>();
-			
-			while (rs.next()) {
-				
-				// Using Map<T, T> we're certifying that our Client and Barber are not instantiate twice for cases that we do have the same Client or same Barber
-				Client cli = mapCli.get(rs.getInt("ClientId"));
-				Barber bar = mapBar.get(rs.getInt("BarberId"));
-				if (cli == null) {
-					cli = instantiateClient(rs);
-					mapCli.put(rs.getInt("ClientId"), cli);
-				}
-				if (bar == null) {
-					bar = intantiateBarber(rs);
-					mapBar.put(rs.getInt("BarberId"), bar);
-				}
-				
-				Agenda obj = instantiateAgenda(rs, cli, bar);
-				list.add(obj);
-			}
-			return list;
-		}
-		catch (SQLException e) {
-			throw new DbException(e.getMessage());
-		}
-		finally {
-			DB.closeStatement(st);
-			DB.closeResultSet(rs);
-		}
+		String command = "ClientId";
+		List<Agenda> obj = findByClientOrBarber(client, command);
+		return obj;
 	}
-
-
-	// this method can be merged with the findByClient method
+	
 	@Override
-	public List<Agenda> findByBarber(Barber barber) {
+	public List<Agenda> findByBarber(Barber barber){
+		String command = "BarberId";
+		List<Agenda> obj = findByClientOrBarber(barber, command);
+		return obj;
+	}
+	
+	
+	public List<Agenda> findByClientOrBarber(Person person, String command) {
+		/*
+		 * This method was created to avoid the repetition in the findByClient and findByBarber methods
+		 * It's only possible cause we have a super class for both classes
+		 */
+		
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
@@ -174,9 +144,9 @@ public class AgendaDaoJDBC implements AgendaDao {
 					+ "ON agenda.ClientId = client.Id "
 					+ "INNER JOIN barber "
 					+ "ON agenda.barberId = barber.Id "
-					+ "WHERE BarberId = ?");
+					+ "WHERE " + command + " = ?");
 			
-			st.setInt(1, barber.getId());
+			st.setInt(1, person.getId());
 			rs = st.executeQuery();
 			
 			List<Agenda> list = new ArrayList<>();
@@ -209,7 +179,7 @@ public class AgendaDaoJDBC implements AgendaDao {
 			DB.closeStatement(st);
 			DB.closeResultSet(rs);
 		}
-	}
-
+	}	
+	
 	
 }
