@@ -43,7 +43,6 @@ public class AgendaDaoJDBC implements AgendaDao {
 
 	@Override
 	public Agenda findById(Integer id) {
-	
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
@@ -58,18 +57,9 @@ public class AgendaDaoJDBC implements AgendaDao {
 			st.setInt(1, id);
 			rs = st.executeQuery();
 			if (rs.next()) {
-				Client cli = new Client();
-				Barber bar = new Barber();
-				cli.setId(rs.getInt("ClientId"));
-				cli.setName(rs.getString("ClientName"));
-				bar.setId(rs.getInt("BarberId"));
-				bar.setName(rs.getString("BarberName"));
-				
-				Agenda obj = new Agenda();
-				obj.setId(rs.getInt("Id"));
-				obj.setTime(rs.getDate("Appointment"));
-				obj.setClient(cli);
-				obj.setBarber(bar);
+				Client cli = instantiateClient(rs);
+				Barber bar = intantiateBarber(rs);						
+				Agenda obj = instantiateAgenda(rs, cli, bar);
 				return obj;
 			}
 			return null;
@@ -84,6 +74,35 @@ public class AgendaDaoJDBC implements AgendaDao {
 	}
 
 	
+	// Class to instantiate automatically an object of Agenda
+	private Agenda instantiateAgenda(ResultSet rs, Client cli, Barber bar) throws SQLException {
+		Agenda obj = new Agenda();
+		obj.setId(rs.getInt("Id"));
+		obj.setTime(rs.getDate("Appointment"));
+		obj.setClient(cli);
+		obj.setBarber(bar);
+		return obj;
+	}
+
+
+	// Class to instantiate automatically an object of Barber
+	private Barber intantiateBarber(ResultSet rs) throws SQLException {
+		Barber bar = new Barber();
+		bar.setId(rs.getInt("BarberId"));
+		bar.setName(rs.getString("BarberName"));
+		return bar;
+	}
+
+	
+	// Class to instantiate automatically an object of Client
+	private Client instantiateClient(ResultSet rs) throws SQLException {
+		Client cli = new Client();
+		cli.setId(rs.getInt("ClientId"));
+		cli.setName(rs.getString("ClientName"));
+		return cli;
+	}
+
+
 	@Override
 	public List<Agenda> findAll() {
 		// TODO Auto-generated method stub
