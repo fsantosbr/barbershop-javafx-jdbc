@@ -3,6 +3,8 @@ package model.dao;
 import java.util.List;
 
 import model.entities.Agenda;
+import model.entities.Barber;
+import model.entities.Client;
 
 public interface AgendaDao {
 
@@ -11,4 +13,7 @@ public interface AgendaDao {
 	void deleteById(Integer id);
 	Agenda findById(Integer id);
 	List<Agenda> findAll();
+	List<Agenda> findByClient(Client client);
+	List<Agenda> findByBarber(Barber barber);
+	
 }

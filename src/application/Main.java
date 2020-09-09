@@ -99,9 +99,19 @@ public class Main extends Application {
 		System.out.println(agenda);
 		
 		AgendaDao agendaDao = DaoFactory.createAgendaDao();
-		
 		Agenda ag = agendaDao.findById(3);
-		
 		System.out.println(ag);
+		
+		Client client = new Client(1, null, null, null);
+		List<Agenda> list3 = agendaDao.findByClient(client);
+		for (Agenda obj : list3) {
+			System.out.println(obj);
+		}
+		
+		Barber barber = new Barber(3, null, null, null);
+		List<Agenda> list4 = agendaDao.findByBarber(barber);
+		for (Agenda obj : list4) {
+			System.out.println(obj);
+		}
 	}
 }
