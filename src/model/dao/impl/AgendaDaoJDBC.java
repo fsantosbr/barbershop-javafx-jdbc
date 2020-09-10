@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,24 +30,86 @@ public class AgendaDaoJDBC implements AgendaDao {
 	
 	@Override
 	public void insert(Agenda obj) {
-		// TODO Auto-generated method stub
-		
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+					"INSERT INTO agenda "
+					+ "(Appointment, ClientId, BarberId) "
+					+ "VALUES "
+					+ "(?, ?, ?)",
+					Statement.RETURN_GENERATED_KEYS);
+			
+			st.setDate(1,  new java.sql.Date(obj.getAppointment().getTime()));
+			st.setInt(2, obj.getClient().getId());
+			st.setInt(3, obj.getBarber().getId());
+			
+			int rowsAffected = st.executeUpdate();
+			if (rowsAffected > 0) {
+				ResultSet rs = st.getGeneratedKeys();
+				if (rs.next()) {
+					int id = rs.getInt(1);
+					obj.setId(id);
+				}
+				DB.closeResultSet(rs);
+			}
+			else {
+				throw new DbException("Unexpected error! No rows affected!");
+			}
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 	}
 
 	@Override
 	public void update(Agenda obj) {
-		// TODO Auto-generated method stub
-		
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+					"UPDATE agenda "
+					+ "SET Appointment = ?, ClientId = ?, BarberId = ? "
+					+ "WHERE Id = ?");
+			
+			st.setDate(1,  new java.sql.Date(obj.getAppointment().getTime()));
+			st.setInt(2, obj.getClient().getId());
+			st.setInt(3, obj.getBarber().getId());
+			st.setInt(4, obj.getId());
+			st.executeUpdate();		
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}		
 	}
 
+	
 	@Override
 	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
-		
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+					"DELETE FROM agenda "
+					+ "WHERE Id = ?");
+			
+			st.setInt(1, id);
+			st.executeUpdate();			
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 	}
 
 	@Override
 	public Agenda findById(Integer id) {
+		// One Id of Agenda will always have just one client and one Barber
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
@@ -82,7 +145,7 @@ public class AgendaDaoJDBC implements AgendaDao {
 	private Agenda instantiateAgenda(ResultSet rs, Client cli, Barber bar) throws SQLException {
 		Agenda obj = new Agenda();
 		obj.setId(rs.getInt("Id"));
-		obj.setTime(rs.getDate("Appointment"));
+		obj.setAppointment(rs.getDate("Appointment"));
 		obj.setClient(cli);
 		obj.setBarber(bar);
 		return obj;
@@ -109,32 +172,6 @@ public class AgendaDaoJDBC implements AgendaDao {
 
 	@Override
 	public List<Agenda> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public List<Agenda> findByClient(Client client) {
-		String command = "ClientId";
-		List<Agenda> obj = findByClientOrBarber(client, command);
-		return obj;
-	}
-	
-	@Override
-	public List<Agenda> findByBarber(Barber barber){
-		String command = "BarberId";
-		List<Agenda> obj = findByClientOrBarber(barber, command);
-		return obj;
-	}
-	
-	
-	public List<Agenda> findByClientOrBarber(Person person, String command) {
-		/*
-		 * This method was created to avoid the repetition in the findByClient and findByBarber methods
-		 * It's only possible cause we have a super class for both classes
-		 */
-		
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
@@ -144,9 +181,8 @@ public class AgendaDaoJDBC implements AgendaDao {
 					+ "ON agenda.ClientId = client.Id "
 					+ "INNER JOIN barber "
 					+ "ON agenda.barberId = barber.Id "
-					+ "WHERE " + command + " = ?");
+					+ "ORDER BY appointment");
 			
-			st.setInt(1, person.getId());
 			rs = st.executeQuery();
 			
 			List<Agenda> list = new ArrayList<>();
@@ -154,7 +190,6 @@ public class AgendaDaoJDBC implements AgendaDao {
 			Map<Integer, Barber> mapBar = new HashMap<>();
 			
 			while (rs.next()) {
-				
 				// Using Map<T, T> we're certifying that our Client and Barber are not instantiate twice for cases that we do have the same Client or same Barber
 				Client cli = mapCli.get(rs.getInt("ClientId"));
 				Barber bar = mapBar.get(rs.getInt("BarberId"));
@@ -167,6 +202,71 @@ public class AgendaDaoJDBC implements AgendaDao {
 					mapBar.put(rs.getInt("BarberId"), bar);
 				}
 				
+				Agenda obj = instantiateAgenda(rs, cli, bar);
+				list.add(obj);
+			}
+			return list;
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
+	}
+
+
+	@Override
+	public List<Agenda> findByClient(Client client) {
+		String command = "ClientId";
+		List<Agenda> obj = findByGenericPerson(client, command);
+		return obj;
+	}
+	
+	@Override
+	public List<Agenda> findByBarber(Barber barber){
+		String command = "BarberId";
+		List<Agenda> obj = findByGenericPerson(barber, command);
+		return obj;
+	}
+	
+	
+	public List<Agenda> findByGenericPerson(Person person, String command) {
+		/* This method was created to avoid the repetition in the findByClient and findByBarber methods
+		 * It's only possible cause we have a super class for both classes
+		 */
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"SELECT agenda.*,client.Name as ClientName, barber.Name as BarberName "
+					+ "FROM agenda INNER JOIN client "
+					+ "ON agenda.ClientId = client.Id "
+					+ "INNER JOIN barber "
+					+ "ON agenda.barberId = barber.Id "
+					+ "WHERE " + command + " = ? "
+					+ "ORDER BY appointment");
+			
+			st.setInt(1, person.getId());
+			rs = st.executeQuery();
+			
+			List<Agenda> list = new ArrayList<>();
+			Map<Integer, Client> mapCli = new HashMap<>();
+			Map<Integer, Barber> mapBar = new HashMap<>();
+			
+			while (rs.next()) {
+				// Using Map<T, T> we're certifying that our Client and Barber are not instantiate twice for cases that we do have the same Client or same Barber
+				Client cli = mapCli.get(rs.getInt("ClientId"));
+				Barber bar = mapBar.get(rs.getInt("BarberId"));
+				if (cli == null) {
+					cli = instantiateClient(rs);
+					mapCli.put(rs.getInt("ClientId"), cli);
+				}
+				if (bar == null) {
+					bar = intantiateBarber(rs);
+					mapBar.put(rs.getInt("BarberId"), bar);
+				}
 				Agenda obj = instantiateAgenda(rs, cli, bar);
 				list.add(obj);
 			}

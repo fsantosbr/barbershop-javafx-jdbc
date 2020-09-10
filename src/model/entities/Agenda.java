@@ -6,7 +6,7 @@ import java.util.Date;
 public class Agenda {
 
 	private Integer id;
-	private Date time;	
+	private Date appointment;	
 	private Client client; // this attribute/connection must be the sub class in order to avoid mistakes from the developer
 	private Barber barber; // this attribute/connection must be the sub class in order to avoid mistakes from the developer
 	
@@ -16,16 +16,16 @@ public class Agenda {
 	public Agenda() {
 	}
 
-	public Agenda(Integer id, Date time, Client client, Barber barber) {
+	public Agenda(Integer id, Date appointment, Client client, Barber barber) {
 		this.id = id;
-		this.time = time;
+		this.appointment = appointment;
 		this.client = client;
 		this.barber = barber;
 	}
 
 	// This overload constructor exists only to show available dates in the screen.
-	public Agenda(Date time) {
-		this.time = time;
+	public Agenda(Date appointment) {
+		this.appointment = appointment;
 	}
 	
 	
@@ -38,12 +38,12 @@ public class Agenda {
 		this.id = id;
 	}
 
-	public Date getTime() {
-		return time;
+	public Date getAppointment() {
+		return appointment;
 	}
 
-	public void setTime(Date time) {
-		this.time = time;
+	public void setAppointment(Date appointment) {
+		this.appointment = appointment;
 	}
 
 	public Client getClient() {
@@ -64,7 +64,7 @@ public class Agenda {
 
 	@Override
 	public String toString() {
-		return "Agenda [time=" + sdf.format(time) + ", client=" + client.getName() + ", barber=" + barber.getName() + "]";
+		return "Agenda [time=" + sdf.format(appointment) + ", client=" + client.getName() + ", barber=" + barber.getName() + "]";
 	}
 
 }

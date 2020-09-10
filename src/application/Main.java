@@ -1,6 +1,8 @@
 package application;
 	
 import java.io.IOException;
+import java.sql.SQLData;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -45,6 +47,8 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		//launch(args);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		
 		System.out.println("New client? New Barber?");
 		System.out.println("Inform who you are!!");
@@ -95,23 +99,53 @@ public class Main extends Application {
 		// for now, let's suppose the system knows what kind of user is placed
 		
 		
-		Agenda agenda = new Agenda(1, new Date(), p1, p2);
-		System.out.println(agenda);
+//		Agenda agenda = new Agenda(1, new Date(), p1, p2);
+//		System.out.println(agenda);
 		
 		AgendaDao agendaDao = DaoFactory.createAgendaDao();
 		Agenda ag = agendaDao.findById(3);
 		System.out.println(ag);
 		
+		System.out.println("by client");
 		Client client = new Client(1, null, null, null);
 		List<Agenda> list3 = agendaDao.findByClient(client);
 		for (Agenda obj : list3) {
 			System.out.println(obj);
 		}
 		
-		Barber barber = new Barber(3, null, null, null);
+		System.out.println("by barber");
+		Barber barber = new Barber(4, null, null, null);
 		List<Agenda> list4 = agendaDao.findByBarber(barber);
 		for (Agenda obj : list4) {
 			System.out.println(obj);
 		}
+		
+		System.out.println("find all");
+		list4 = agendaDao.findAll();
+		for (Agenda obj : list4) {
+			System.out.println(obj);
+		}
+		
+	
+//		System.out.println("insert");
+//		Client c1 = new Client(5, "Pedro", "p@gmail.", "1159322105");	
+//		Agenda newAgenda = new Agenda(null, new Date(), c1, barber);
+//		agendaDao.insert(newAgenda);
+//		System.out.println("New Id created = " + newAgenda.getId());
+		
+	
+		System.out.println("update");
+		Client c2 = new Client(5, "Pedro", "p@gmail.", "1159322105");
+		Barber b1 = new Barber(4, "M", "email", "12345");
+		Agenda ag1 = new Agenda(12, new Date(), c2, b1);
+		ag1 = agendaDao.findById(12);
+		ag1.setClient(c2);
+		agendaDao.update(ag1);
+		
+		
+//		System.out.println("delete");
+//		agendaDao.deleteById(10);
+		
+		
 	}
 }
