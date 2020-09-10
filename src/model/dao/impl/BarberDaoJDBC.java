@@ -12,7 +12,6 @@ import db.DB;
 import db.DbException;
 import model.dao.BarberDao;
 import model.entities.Barber;
-import model.entities.Client;
 
 public class BarberDaoJDBC implements BarberDao {
 
@@ -27,13 +26,7 @@ public class BarberDaoJDBC implements BarberDao {
 	public void insert(Barber obj) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement(
-					"INSERT INTO barber "
-					+ "(Name, Email, PhoneNumber) "
-					+ "VALUES "
-					+ "(?, ?, ?)",
-					Statement.RETURN_GENERATED_KEYS);
-			
+			st = conn.prepareStatement("INSERT INTO barber (Name, Email, PhoneNumber) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 			st.setString(1, obj.getName());
 			st.setString(2, obj.getEmail());
 			st.setString(3, obj.getPhoneNumber());
@@ -63,11 +56,7 @@ public class BarberDaoJDBC implements BarberDao {
 	public void update(Barber obj) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement(
-					"UPDATE barber "
-					+ "SET Name = ?, Email = ?, PhoneNumber = ? "
-					+ "WHERE Id = ?");
-			
+			st = conn.prepareStatement("UPDATE barber SET Name = ?, Email = ?, PhoneNumber = ? WHERE Id = ?");
 			st.setString(1, obj.getName());
 			st.setString(2, obj.getEmail());
 			st.setString(3, obj.getPhoneNumber());
@@ -87,10 +76,7 @@ public class BarberDaoJDBC implements BarberDao {
 	public void deleteById(Integer id) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement(
-					"DELETE FROM barber "
-					+ "WHERE Id = ?");
-			
+			st = conn.prepareStatement("DELETE FROM barber WHERE Id = ?");
 			st.setInt(1, id);
 			st.executeUpdate();			
 		}

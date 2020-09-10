@@ -6,15 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import db.DB;
 import db.DbException;
 import model.dao.ClientDao;
-import model.entities.Agenda;
-import model.entities.Barber;
 import model.entities.Client;
 
 // The class that receives the interface and the methods created there
