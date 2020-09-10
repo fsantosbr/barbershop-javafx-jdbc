@@ -2,6 +2,7 @@ package model.dao;
 
 import db.DB;
 import model.dao.impl.AgendaDaoJDBC;
+import model.dao.impl.BarberDaoJDBC;
 import model.dao.impl.ClientDaoJDBC;
 
 public class DaoFactory {
@@ -13,6 +14,10 @@ public class DaoFactory {
 	
 	
 	public static ClientDao createClientDao() {
-		return new ClientDaoJDBC();
+		return new ClientDaoJDBC(DB.getConnection());
+	}
+	
+	public static BarberDao createBarberDao() {
+		return new BarberDaoJDBC(DB.getConnection());
 	}
 }

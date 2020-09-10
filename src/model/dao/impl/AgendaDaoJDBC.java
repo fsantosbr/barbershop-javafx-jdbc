@@ -125,7 +125,7 @@ public class AgendaDaoJDBC implements AgendaDao {
 			rs = st.executeQuery();
 			if (rs.next()) {
 				Client cli = instantiateClient(rs);
-				Barber bar = intantiateBarber(rs);						
+				Barber bar = instantiateBarber(rs);						
 				Agenda obj = instantiateAgenda(rs, cli, bar);
 				return obj;
 			}
@@ -153,7 +153,7 @@ public class AgendaDaoJDBC implements AgendaDao {
 
 
 	// Class to instantiate automatically an object of Barber
-	private Barber intantiateBarber(ResultSet rs) throws SQLException {
+	private Barber instantiateBarber(ResultSet rs) throws SQLException {
 		Barber bar = new Barber();
 		bar.setId(rs.getInt("BarberId"));
 		bar.setName(rs.getString("BarberName"));
@@ -198,7 +198,7 @@ public class AgendaDaoJDBC implements AgendaDao {
 					mapCli.put(rs.getInt("ClientId"), cli);
 				}
 				if (bar == null) {
-					bar = intantiateBarber(rs);
+					bar = instantiateBarber(rs);
 					mapBar.put(rs.getInt("BarberId"), bar);
 				}
 				
@@ -264,7 +264,7 @@ public class AgendaDaoJDBC implements AgendaDao {
 					mapCli.put(rs.getInt("ClientId"), cli);
 				}
 				if (bar == null) {
-					bar = intantiateBarber(rs);
+					bar = instantiateBarber(rs);
 					mapBar.put(rs.getInt("BarberId"), bar);
 				}
 				Agenda obj = instantiateAgenda(rs, cli, bar);

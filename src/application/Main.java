@@ -13,6 +13,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.dao.AgendaDao;
+import model.dao.BarberDao;
+import model.dao.ClientDao;
 import model.dao.DaoFactory;
 import model.entities.Agenda;
 import model.entities.Barber;
@@ -134,18 +136,59 @@ public class Main extends Application {
 //		System.out.println("New Id created = " + newAgenda.getId());
 		
 	
-		System.out.println("update");
-		Client c2 = new Client(5, "Pedro", "p@gmail.", "1159322105");
-		Barber b1 = new Barber(4, "M", "email", "12345");
-		Agenda ag1 = new Agenda(12, new Date(), c2, b1);
-		ag1 = agendaDao.findById(12);
-		ag1.setClient(c2);
-		agendaDao.update(ag1);
+//		System.out.println("update");
+//		Client c2 = new Client(5, "Pedro", "p@gmail.", "1159322105");
+//		Barber b1 = new Barber(4, "M", "email", "12345");
+//		Agenda ag1 = new Agenda(12, new Date(), c2, b1);
+//		ag1 = agendaDao.findById(12);
+//		ag1.setClient(c2);
+//		agendaDao.update(ag1);
 		
 		
 //		System.out.println("delete");
 //		agendaDao.deleteById(10);
 		
+		
+		ClientDao clientDao = DaoFactory.createClientDao();
+		BarberDao barberDao = DaoFactory.createBarberDao();
+//		Client c1 = new Client(null, "Pedro", "p@gmail.", "1159322105");
+//		clientDao.insert(c1);		
+
+//		Barber b1 = new Barber(null, "Pedro", "p@gmail.", "1159322105");
+//		barberDao.insert(b1);
+		
+//		Client c1 = new Client(9, "Pedro", "p@gmail.", "1159322105");
+//		c1.setName("Pedro 2");
+//		clientDao.update(c1);
+//		
+//		Barber b1 = new Barber(5, "Pedro", "p@gmail.", "1159322105");
+//		b1.setName("Pedro 2");
+//		barberDao.update(b1);
+		
+		clientDao.deleteById(10);
+		barberDao.deleteById(5);
+		
+		System.out.println("client");
+		Client c2 = clientDao.findById(1);
+		System.out.println(c2);
+		
+		System.out.println("barber");
+		Barber b2 = barberDao.findById(1);
+		System.out.println(b2);
+		
+		System.out.println("find all");
+		List<Client> list5 = new ArrayList<>();
+		list5 = clientDao.findAll();
+		for (Client obj : list5) {
+			System.out.println(obj);
+		}
+		
+		System.out.println("find all");
+		List<Barber> list6 = new ArrayList<>();
+		list6 = barberDao.findAll();
+		for (Barber obj : list6) {
+			System.out.println(obj);
+		}
 		
 	}
 }
